@@ -22,7 +22,7 @@ namespace memory
 				if (entry.m_callback)
 				{
 					std::invoke(std::move(entry.m_callback), result);
-					LOG(("Pointer Found as -> ") << entry.m_name);
+					//LOG(("Pointer Found as -> ") << entry.m_name);
 				
 					LOG("Found " << entry.m_name 
 						//<<" ["<< hex(region.begin().as<DWORD64>()) << "]" 

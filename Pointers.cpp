@@ -5,11 +5,20 @@ pointers::pointers()
 {
 	memory::batch main_batch;
 	main_batch.add(("DX_Renderer"), ("48 8B 0D ? ? ? ? 48 8B 01 FF 50 08 85 C0 75 2D 48 8B 05 ? ? ? ? 48 85 C0 75 1A 48 8B 0D ? ? ? ? 48 8D 15 ? ? ? ?"), [this](memory::handle ptr) {
-		m_dxrenderer = ptr.add(0x3).rip().as<PVOID>();
+		m_dxrenderer = ptr.add(0x3).rip().as<DxRenderer*>();
 		//	 *(DxRenderer**)OFFSET_DXRENDERER; //0x142738080
-		auto dxrenderer = ptr.as<DxRenderer**>();
-		LOG(hex(m_dxrenderer)<< " render");
+		auto dxrenderer = ptr.add(0x3).rip().as<DxRenderer*>();
+		LOG(hex(dxrenderer)<< " render");
 
+
+		const auto screen = dxrenderer->m_pScreen;
+		if (!screen) return nullptr;
+		LOG(hex(screen) << " screen");
+		auto swapchain = screen->m_pSwapChain;
+		if (!swapchain) return nullptr;
+		LOG(hex(swapchain) << " swapchain");
+
+		m_swapchain = &swapchain;
 
 	});
 	auto game_region = memory::module(("bf4.exe"));

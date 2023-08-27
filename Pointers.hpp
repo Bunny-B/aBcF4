@@ -34,7 +34,7 @@ public:
 	~pointers();
 public:
 	HWND m_hwnd{};
-	IDXGISwapChain* m_swapchain{};
-	PVOID m_dxrenderer{};
+	IDXGISwapChain** m_swapchain{};
+	DxRenderer* m_dxrenderer{};
 };
 inline pointers* g_pointers{};

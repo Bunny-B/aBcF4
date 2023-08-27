@@ -86,6 +86,7 @@ BOOL APIENTRY DllMain( HMODULE hmod,
             {
 				//g_pointers->m_hwnd = FindWindowA(("Battlefield 4"), NULL);
 				g_globals.g_hwnd = FindWindowA(("Battlefield 4"), NULL);
+				
 				while (!g_globals.g_hwnd)
 					std::this_thread::sleep_for(std::chrono::seconds(1));
 
@@ -98,12 +99,13 @@ BOOL APIENTRY DllMain( HMODULE hmod,
 				try
 				{
 					LOG("Injected");
-					HookFunction();
+					//HookFunction();
 
-				//	auto pointers_instance = std::make_unique<pointers>(); LOG("Pointers Init->");
+					auto pointers_instance = std::make_unique<pointers>(); LOG("Pointers Init->");
 					LOG("Pointers Initiated");
-					//auto RendererInstance = std::make_unique<renderer>(); LOG("Renderer Init->");
-					//auto hooking_instance = std::make_unique<hooking>(); LOG(("Hooking Init->"));
+
+					auto RendererInstance = std::make_unique<renderer>(); LOG("Renderer Init->");
+					auto hooking_instance = std::make_unique<hooking>(); LOG(("Hooking Init->"));
 
 					//g_hooking->enable();
 					LOG("Hooks Initiate");

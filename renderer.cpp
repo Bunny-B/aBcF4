@@ -15,9 +15,10 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARA
 
 
 renderer::renderer() :
-	m_dxgi_swapchain(g_pointers->m_swapchain)
+	m_dxgi_swapchain(*g_pointers->m_swapchain)
 {
-	LOG("renderer Ctor");
+	LOG("renderer Ctor");//dont even get called
+
 	void* d3d_device{};
 	if (SUCCEEDED(m_dxgi_swapchain->GetDevice(__uuidof(ID3D11Device), &d3d_device)))
 	{
@@ -92,7 +93,7 @@ void renderer::post_reset()
 
 void renderer::wndproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-
+	LOG("wndproc");
 	//CHINESS
 	if (msg == WM_KEYUP && wparam == VK_INSERT)
 	{
