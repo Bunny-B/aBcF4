@@ -100,7 +100,8 @@ BOOL APIENTRY DllMain( HMODULE hmod,
 				{
 					LOG("Injected");
 					//HookFunction();
-
+					//IDXGIFactory1 * pFactory;
+			
 					auto pointers_instance = std::make_unique<pointers>(); LOG("Pointers Init->");
 					LOG("Pointers Initiated");
 
@@ -121,7 +122,7 @@ BOOL APIENTRY DllMain( HMODULE hmod,
 
 						Sleep(75);
 					}
-				//	pointers_instance.reset(); LOG(("<- Reset Pointers"));
+					pointers_instance.reset(); LOG(("<- Reset Pointers"));
 					//RendererInstance.reset(); LOG(("<- Reset Renderer"));
 
 				}

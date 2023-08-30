@@ -15,6 +15,7 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARA
 
 
 renderer::renderer() :
+
 	m_dxgi_swapchain(*g_pointers->m_swapchain)
 {
 	LOG("renderer Ctor");//dont even get called

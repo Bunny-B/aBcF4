@@ -24,8 +24,7 @@ HRESULT hooks::swapchain_resizebuffers(IDXGISwapChain* this_, UINT buffer_count,
 	{
 		g_renderer->pre_reset();
 
-		auto result = g_hooking->m_swapchain_hook.get_original<decltype(&swapchain_resizebuffers)>(swapchain_resizebuffers_index)
-			(this_, buffer_count, width, height, new_format, swapchain_flags);
+		auto result = g_hooking->m_swapchain_hook.get_original<decltype(&swapchain_resizebuffers)>(swapchain_resizebuffers_index)(this_, buffer_count, width, height, new_format, swapchain_flags);
 
 		if (SUCCEEDED(result))
 		{
@@ -35,7 +34,6 @@ HRESULT hooks::swapchain_resizebuffers(IDXGISwapChain* this_, UINT buffer_count,
 		return result;
 	}
 
-	return g_hooking->m_swapchain_hook.get_original<decltype(&swapchain_resizebuffers)>(swapchain_resizebuffers_index)
-		(this_, buffer_count, width, height, new_format, swapchain_flags);
+	return g_hooking->m_swapchain_hook.get_original<decltype(&swapchain_resizebuffers)>(swapchain_resizebuffers_index)(this_, buffer_count, width, height, new_format, swapchain_flags);
 	return NULL;
 }

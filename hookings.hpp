@@ -15,6 +15,8 @@ struct hooks
 	static HRESULT swapchain_resizebuffers(IDXGISwapChain* this_, UINT buffer_count, UINT width, UINT height, DXGI_FORMAT new_format, UINT swapchain_flags);
 
 	static LRESULT wndproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+	static __int64 sub_140821590(__int64 a1, float a2, unsigned __int8 a3);
+	static void __fastcall Screen_Swapchain_Relatedref(__int64 IDXGIAdapter1, __int64 screen, char a3);
 
 };
 
@@ -105,8 +107,8 @@ public:
 		return detour_hook_helper::hook_to_detour_hook_helper<detour_function>::m_detour_hook->get_original<decltype(detour_function)>();
 	}
 
-	//void hook_script_handler(CGameScriptHandler* handler);
-	//std::unordered_map<CGameScriptHandler*, std::unique_ptr<vmt_hook>> m_handler_hooks;
+
+
 
 private:
 	bool m_enabled{};

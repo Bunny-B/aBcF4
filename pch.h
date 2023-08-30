@@ -42,6 +42,11 @@
 #define LOG(expr) do { std::cout << "[LOG] " << expr << std::endl; } while(false)
 #define hex(value) "0x" << std::hex << std::uppercase << (DWORD64)value << std::dec << std::nouppercase
 
+typedef unsigned char BYTE;
+typedef unsigned short WORD;
+typedef unsigned long long QWORD;
+
+
 class globals
 {
 public:

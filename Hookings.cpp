@@ -16,7 +16,7 @@ hooking::~hooking()
 LRESULT hooks::wndproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	
-	
+	LOG("wndproc");
 		if (g_globals.g_running)
 		{
 			switch (msg)
@@ -42,9 +42,20 @@ LRESULT hooks::wndproc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		return NULL;
 }
 
-hooking::hooking() :
-	// Swapchain
-	m_swapchain_hook(g_pointers->m_swapchain, hooks::swapchain_num_funcs)
+__int64 __fastcall hooks::sub_140821590(__int64 a1, float a2, unsigned __int8 a3)
+{
+	LOG("sub_140821590"<< std::endl << "a1: " << a1 << std::endl << "a2: " << a2 << std::endl << "a3: " << a3);
+
+	return  g_hooking->get_original<sub_140821590>()(a1,a2,a3);
+}
+void __fastcall hooks::Screen_Swapchain_Relatedref(__int64 IDXGIAdapter1, __int64 screen, char a3) {
+	LOG("Screen_Swapchain_Relatedref");
+	LOG("Screen : " << hex(screen));
+	return  g_hooking->get_original<Screen_Swapchain_Relatedref>()(IDXGIAdapter1, screen, a3);
+
+}
+hooking::hooking() 
+	:m_swapchain_hook(*g_pointers->m_swapchain, hooks::swapchain_num_funcs)
 {
 	m_swapchain_hook.hook(hooks::swapchain_present_index, &hooks::swapchain_present);
 	m_swapchain_hook.hook(hooks::swapchain_resizebuffers_index, &hooks::swapchain_resizebuffers);
@@ -56,9 +67,10 @@ hooking::hooking() :
 		detour_hook_helper->m_detour_hook->set_target_and_create_hook(detour_hook_helper->m_on_hooking_available());
 	}
 
-	//detour_hook_helper::add<hooks::add_element_to_scene2>(XOR("Scene2"), g_pointers->add_element_to_scene2);
-	//detour_hook_helper::add<hooks::get_scene_preset>(XOR("Scene"), g_pointers->get_scene_preset);
+	//detour_hook_helper::add<hooks::sub_140821590>(("testhook"), g_pointers->sub_140821590);
+	detour_hook_helper::add<hooks::Screen_Swapchain_Relatedref>(("ref"), g_pointers->Screen_Swapchain_Relatedref);
 
+	//detour_hook_helper::add<hooks::swapchain_present_index>(("present"), g_pointers->get_scene_preset);
 
 	
 	g_hooking = this;
@@ -66,7 +78,8 @@ hooking::hooking() :
 
 void hooking::enable()
 {
-	m_swapchain_hook.enable();
+	m_swapchain_hook.enable(); //vmt hook
+
 	m_og_wndproc = WNDPROC(SetWindowLongPtrW(g_pointers->m_hwnd, GWLP_WNDPROC, LONG_PTR(&hooks::wndproc)));
 
 	for (const auto& detour_hook_helper : m_detour_hook_helpers)
