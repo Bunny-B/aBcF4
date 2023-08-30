@@ -160,7 +160,7 @@ public:
 	~pointers();
 public:
 	HWND m_hwnd{};
-	IDXGISwapChain** m_swapchain{};
+	IDXGISwapChain* m_swapchain{};
 	DxRenderer* m_dxrenderer{};
 	PVOID render;
 	PVOID Screen_Swapchain_Relatedref;

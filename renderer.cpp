@@ -16,25 +16,36 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARA
 
 renderer::renderer() :
 
-	m_dxgi_swapchain(*g_pointers->m_swapchain)
+	m_dxgi_swapchain(g_pointers->m_swapchain)
 {
-	LOG("renderer Ctor");//dont even get called
+	LOG("renderer Ctor");//Get called
 
 	void* d3d_device{};
 	if (SUCCEEDED(m_dxgi_swapchain->GetDevice(__uuidof(ID3D11Device), &d3d_device)))
 	{
+		LOG("Get Device SUCCEEDED");//dont even get called
+
 		m_d3d_device.Attach(static_cast<ID3D11Device*>(d3d_device));
 	}
 	else
 	{
+		LOG("Get Device Failded");//dont even get called
+
 		throw std::runtime_error("Failed to get D3D device.");
 	}
+	LOG("Get Device");//dont even get called
+
 	m_d3d_device->GetImmediateContext(m_d3d_device_context.GetAddressOf());
+	LOG("Get Device Context");//dont even get called
 
 
 	ImGui_ImplDX11_Init(m_d3d_device.Get(), m_d3d_device_context.Get());
-	ImGui_ImplWin32_Init(g_pointers->m_hwnd);
+	LOG("DX11 INIT");//dont even get called
 
+	ImGui_ImplWin32_Init(g_pointers->m_hwnd);
+	LOG("ImGui INIT");//dont even get called
+
+	LOG("renderer Ctor End");//dont even get called
 
 	g_renderer = this;
 }

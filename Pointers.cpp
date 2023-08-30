@@ -20,7 +20,7 @@ pointers::pointers()
 
 		//	IDXGISwapChain** m_swapchain{};
 		//swapchain = swapchain pointer IDXGISwapChain* m_pSwapChain;	
-		m_swapchain = &swapchain;
+		m_swapchain = swapchain;
 		
 	});
 	//E8 ? ? ? ? 48 8B D7 48 8B CE E8 ? ? ? ? C6 46 40 01  0xCA _qword_1423EC238_render_related

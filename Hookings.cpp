@@ -55,7 +55,7 @@ void __fastcall hooks::Screen_Swapchain_Relatedref(__int64 IDXGIAdapter1, __int6
 
 }
 hooking::hooking() 
-	:m_swapchain_hook(*g_pointers->m_swapchain, hooks::swapchain_num_funcs)
+	:m_swapchain_hook(g_pointers->m_swapchain, hooks::swapchain_num_funcs)
 {
 	m_swapchain_hook.hook(hooks::swapchain_present_index, &hooks::swapchain_present);
 	m_swapchain_hook.hook(hooks::swapchain_resizebuffers_index, &hooks::swapchain_resizebuffers);
