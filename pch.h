@@ -45,6 +45,7 @@
 typedef unsigned char BYTE;
 typedef unsigned short WORD;
 typedef unsigned long long QWORD;
+typedef unsigned long long _QWORD;
 
 
 class globals

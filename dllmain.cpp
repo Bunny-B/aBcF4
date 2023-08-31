@@ -108,7 +108,7 @@ BOOL APIENTRY DllMain( HMODULE hmod,
 					auto RendererInstance = std::make_unique<renderer>(); LOG("Renderer Init->");
 					auto hooking_instance = std::make_unique<hooking>(); LOG(("Hooking Init->"));
 
-					//g_hooking->enable();
+					g_hooking->enable();
 					LOG("Hooks Initiate");
 
 
@@ -123,7 +123,8 @@ BOOL APIENTRY DllMain( HMODULE hmod,
 						Sleep(75);
 					}
 					pointers_instance.reset(); LOG(("<- Reset Pointers"));
-					//RendererInstance.reset(); LOG(("<- Reset Renderer"));
+					RendererInstance.reset(); LOG(("<- Reset Renderer"));
+					hooking_instance.reset(); LOG(("<- Reset Hooking"));
 
 				}
 				catch (std::exception const& ex)

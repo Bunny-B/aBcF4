@@ -30,7 +30,7 @@ renderer::renderer() :
 	}
 	else
 	{
-		//LOG("Get Device Failded");//dont even get called
+		//LOG("Get Device Failded");//  get called
 
 		throw std::runtime_error("Failed to get D3D device.");
 	}
@@ -38,22 +38,23 @@ renderer::renderer() :
 	try
 	{
 		m_d3d_device->GetImmediateContext(m_d3d_device_context.GetAddressOf());
-		LOG("Get Device Context");//dont  get called
+		LOG("Get Device Context");//  get called
+		ImGui::CreateContext();
+
+		LOG("DX11 INIT Start");//  get called
+		ImGui_ImplDX11_Init(m_d3d_device.Get(), m_d3d_device_context.Get());
+		LOG("DX11 INIT");//dont  get called
+
+		ImGui_ImplWin32_Init(g_pointers->m_hwnd);
+		LOG("ImGui INIT");//dont  get called
+
+		LOG("renderer Ctor End");//dont  get called
 	}
 	catch (std::exception& e)
 	{
-			LOG(e.what());
+		LOG(e.what());
 		throw std::runtime_error("Failed to get D3D device context.");
 	}
-
-	ImGui_ImplDX11_Init(m_d3d_device.Get(), m_d3d_device_context.Get());
-	LOG("DX11 INIT");//dont  get called
-
-	ImGui_ImplWin32_Init(g_pointers->m_hwnd);
-	LOG("ImGui INIT");//dont  get called
-
-	LOG("renderer Ctor End");//dont  get called
-
 	g_renderer = this;
 }
 
@@ -87,7 +88,7 @@ void renderer::on_present()
 	if (ImGui::IsKeyPressed(static_cast<ImGuiKey>(ImGuiKey_Insert), false))
 		g_gui.m_opened ? g_gui.m_opened = false : g_gui.m_opened = true;
 
-	if (g_gui.m_opened)
+	//if (g_gui.m_opened)
 	{
 		if(ImGui::Begin("test")){
 

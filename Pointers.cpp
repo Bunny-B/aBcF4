@@ -1,35 +1,66 @@
 #include "pch.h"
 #include "Pointers.hpp"
 
+
 pointers::pointers()
 {
 	memory::batch main_batch;
 	main_batch.add(("DX_Renderer"), ("48 8B 0D ? ? ? ? 48 8B 01 FF 50 08 85 C0 75 2D 48 8B 05 ? ? ? ? 48 85 C0 75 1A 48 8B 0D ? ? ? ? 48 8D 15 ? ? ? ?"), [this](memory::handle ptr) {
+
 		m_dxrenderer = ptr.add(0x3).rip().as<DxRenderer*>();
+
+
+		auto dxrenderer = ptr.add(0x3).rip().as<DxRenderer**>();
+
+		LOG(hex(dxrenderer) << " render");
+
+		uint32_t itterator_v7_ = 0;
+		for (int i = 0; i < 100; i++)
+		{
+			const auto sc = (_QWORD*)(*(_QWORD*)(ptr.add(0x3).rip().as<_QWORD>() + 0x38) + 0x138i64 * itterator_v7_);
+			//LOG("sc: " << hex(sc)<< " : "<<i);//0x1425ED5D0
+			Screen* screenInstance = (Screen*)(sc);
+			if(screenInstance == nullptr)
+				break;
+			
+				itterator_v7_ = i;
+			
+		}
+	//	const auto sc =  (_QWORD*)(*(_QWORD*)(ptr.add(0x3).rip().as<_QWORD>() + 0x38) + 0x138i64 * itterator_v7_);
+	//	LOG("sc: " << hex(sc));//0x1425ED5D0
+
+	//	Screen* screenInstance = (Screen*)(sc);
+//		LOG("swapchain: " << hex(screenInstance->m_pSwapChain));
+	//	m_swapchain = screenInstance.m_pSwapChain;
+		//m_swapchain = sc->m_pSwapChain;
+		//LOG("swapchain: " << hex(m_swapchain));
+
 		//	 *(DxRenderer**)OFFSET_DXRENDERER; //0x142738080
-		auto dxrenderer = ptr.add(0x3).rip().as<DxRenderer*>();
-		LOG(hex(dxrenderer)<< " render");
 
+		
 
-		const auto screen = dxrenderer->m_pScreen0;
-		if (!screen) return nullptr;
-		LOG(hex(screen) << " screen");
+	
+	
+		auto screen = (*(DxRenderer**)dxrenderer)->m_pScreen;
+		LOG(hex(screen) << " screen1");
 		auto swapchain = screen->m_pSwapChain;
-		if (!swapchain) return nullptr;
 		LOG(hex(swapchain) << " swapchain");
 
 		//	IDXGISwapChain** m_swapchain{};
 		//swapchain = swapchain pointer IDXGISwapChain* m_pSwapChain;	
-		m_swapchain = swapchain;
 		
+		// m_swapchain = (IDXGISwapChain*)screen1->swapchain1;
+		m_swapchain = swapchain;// get_swapchain();
 	});
 	//E8 ? ? ? ? 48 8B D7 48 8B CE E8 ? ? ? ? C6 46 40 01  0xCA _qword_1423EC238_render_related
+	/*
 	main_batch.add(("render_qword"), ("E8 ? ? ? ? 48 8B D7 48 8B CE E8 ? ? ? ? C6 46 40 01"), [this](memory::handle ptr) {
 		render = ptr.add(0x1).rip().add(0xCA).as<PVOID>();
 		LOG("render: " << hex(render));
 	});
+	*/
 	//E8 ? ? ? ? 48 8B D7 48 8B CE E8 ? ? ? ? C6 46 40 01 void __fastcall Screen_Swapchain_Relatedref(__int64 IDXGIAdapter1, __int64 screen, char a3)
-	 
+	 /*
 	main_batch.add(("Screen_Swapchain_Relatedref"), ("E8 ? ? ? ? 48 8B D7 48 8B CE E8 ? ? ? ? C6 46 40 01"), [this](memory::handle ptr) {
 		Screen_Swapchain_Relatedref = ptr.add(0x1).rip().as<PVOID>();
 		});
@@ -40,7 +71,7 @@ pointers::pointers()
 		LOG("a2_class: " << hex(_unk_142317F68_a2_class));
 
 	});
-
+	*/
 	//45 88 BE ? ? ? ? 48 8D 15 ? ? ? ?  no result 
 
 	//48 8B 0D ? ? ? ? E8 ? ? ? ? 48 8B D8 49 8B 4E 48 <code>Engine.BuildInfo_Win64_retail.dll
@@ -67,10 +98,12 @@ pointers::pointers()
 	memory::batch dxgi;
 
 	//E9 3B 72 FF BF  Present dxgi.dll
+	/*
 	dxgi.add(("Present"), ("E9 3B 72 FF BF"), [this](memory::handle ptr) {
 		m_present = ptr.as<PVOID>();
 		LOG("Present: " << hex(m_present));
 	});
+	*/
 	/*
 	/*
 	//48 89 5C 24 ? 55 56 57 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 45 27  on_present

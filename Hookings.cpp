@@ -68,7 +68,7 @@ hooking::hooking()
 	}
 
 	//detour_hook_helper::add<hooks::sub_140821590>(("testhook"), g_pointers->sub_140821590);
-	detour_hook_helper::add<hooks::Screen_Swapchain_Relatedref>(("ref"), g_pointers->Screen_Swapchain_Relatedref);
+	//detour_hook_helper::add<hooks::Screen_Swapchain_Relatedref>(("ref"), g_pointers->Screen_Swapchain_Relatedref);
 
 	//detour_hook_helper::add<hooks::swapchain_present_index>(("present"), g_pointers->get_scene_preset);
 
