@@ -23,29 +23,36 @@ renderer::renderer() :
 	void* d3d_device{};
 	if (SUCCEEDED(m_dxgi_swapchain->GetDevice(__uuidof(ID3D11Device), &d3d_device)))
 	{
-		LOG("Get Device SUCCEEDED");//dont even get called
-
+		LOG("Get Device SUCCEEDED");
 		m_d3d_device.Attach(static_cast<ID3D11Device*>(d3d_device));
+		LOG("Get Device SUCCEEDED 2");
+
 	}
 	else
 	{
-		LOG("Get Device Failded");//dont even get called
+		//LOG("Get Device Failded");//dont even get called
 
 		throw std::runtime_error("Failed to get D3D device.");
 	}
-	LOG("Get Device");//dont even get called
-
-	m_d3d_device->GetImmediateContext(m_d3d_device_context.GetAddressOf());
-	LOG("Get Device Context");//dont even get called
-
+	LOG("Get Device");//get called
+	try
+	{
+		m_d3d_device->GetImmediateContext(m_d3d_device_context.GetAddressOf());
+		LOG("Get Device Context");//dont  get called
+	}
+	catch (std::exception& e)
+	{
+			LOG(e.what());
+		throw std::runtime_error("Failed to get D3D device context.");
+	}
 
 	ImGui_ImplDX11_Init(m_d3d_device.Get(), m_d3d_device_context.Get());
-	LOG("DX11 INIT");//dont even get called
+	LOG("DX11 INIT");//dont  get called
 
 	ImGui_ImplWin32_Init(g_pointers->m_hwnd);
-	LOG("ImGui INIT");//dont even get called
+	LOG("ImGui INIT");//dont  get called
 
-	LOG("renderer Ctor End");//dont even get called
+	LOG("renderer Ctor End");//dont  get called
 
 	g_renderer = this;
 }

@@ -8,10 +8,10 @@ pointers::pointers()
 		m_dxrenderer = ptr.add(0x3).rip().as<DxRenderer*>();
 		//	 *(DxRenderer**)OFFSET_DXRENDERER; //0x142738080
 		auto dxrenderer = ptr.add(0x3).rip().as<DxRenderer*>();
-		LOG(hex((DWORD64)((QWORD*)dxrenderer))<< " render");
+		LOG(hex(dxrenderer)<< " render");
 
 
-		const auto screen = dxrenderer->m_pScreen;
+		const auto screen = dxrenderer->m_pScreen0;
 		if (!screen) return nullptr;
 		LOG(hex(screen) << " screen");
 		auto swapchain = screen->m_pSwapChain;

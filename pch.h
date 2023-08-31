@@ -37,7 +37,7 @@
 #include "module.h"
 #include "batch.hpp"
 #include "range.hpp"
-
+#include <exception>
 
 #define LOG(expr) do { std::cout << "[LOG] " << expr << std::endl; } while(false)
 #define hex(value) "0x" << std::hex << std::uppercase << (DWORD64)value << std::dec << std::nouppercase

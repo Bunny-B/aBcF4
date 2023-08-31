@@ -17,7 +17,8 @@ public:
 class DxRenderer
 {
 public:
-	BYTE pad00[0x38];                    // 0x00
+	Screen* m_pScreen0;                    // 0x00
+	BYTE pad00[0x30];                    // 0x00
 	Screen* m_pScreen;                    // 0x38
 	BYTE pad78[0xC0];                    // 0x40
 	ID3D11Device* m_pDevice;            // 0x100
