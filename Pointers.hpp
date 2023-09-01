@@ -9,46 +9,18 @@ public:
 	uint64_t* swapchain1;
 
 };
+
 class Screen
 {
 public:
-	//   screen + 0x19, outputmode
-	char pad00[0x58];				//0x00
+	BYTE pad00[0x58];				//0x00
 	uint32_t m_Width;			//0x58 copy of m_WindowWidth
 	uint32_t m_Height;			//0x5C copy of m_WindowHeight
 	uint32_t m_WindowWidth;			//0x60  48 89 5C 24 ? 57 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 84 24 ? ? ? ? 48 8B 81 ? ? ? ? 48 8B DA 48 8B F9 
 	uint32_t m_WindowHeight;		//0x64  48 89 5C 24 ? 57 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 84 24 ? ? ? ? 48 8B 81 ? ? ? ? 48 8B DA 48 8B F9 
 	char pad01[0x88];				//0x68
 	IDXGISwapChain* m_pSwapChain;		//0xF0  48 89 5C 24 ? 57 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 84 24 ? ? ? ? 48 8B 81 ? ? ? ? 48 8B DA 48 8B F9 
-
-	/*
-	  v8 = (*(__int64 (__fastcall **)(__int64, _QWORD *))(*(_QWORD *)Swapchain + 0x78i64))(Swapchain, output);
-      if ( v8 < 0 && qword_TwinkleGetVideo )
-        directx_error_handling(
-          qword_TwinkleGetVideo,
-          v8,
-          "screen->swapChain->GetContainingOutput(&screen->output.assignGet())",
-          0i64);
-	*/
-	//   Swapchain = screen[0x1E]; //IDXGISwapChain
-
-	/*
-	    v22 = (*(__int64 (__fastcall **)(__int64, int *, _QWORD *, __int64))(*(_QWORD *)output_1 + 0x48i64))(
-              output_1,
-              matchmod,
-              screen + 0x19,
-              m_device);
-      if ( v22 < 0 )
-      {
-        if ( qword_TwinkleGetVideo )
-          directx_error_handling(
-            qword_TwinkleGetVideo,
-            v22,
-            "screen->output->FindClosestMatchingMode(&matchMode, &screen->outputMode, m_device)",
-            0i64);
-	*/
-	//  output = screen + 0x1D;
-	char pad02[0x40];              // 0xF8
+	char pad02[0x138 - 0xF8];				//0xF8
 };
 //size 0x138 //SCreen = (_QWORD *)(*(_QWORD *)(renderer + 0x38) + 0x138i64 * itterator_v7_);
 static_assert(sizeof(Screen) == 0x138);
